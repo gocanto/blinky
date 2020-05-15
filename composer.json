@@ -25,10 +25,10 @@
         "symfony/validator": "^5.0"
     },
     "require-dev": {
-        "roave/security-advisories": "dev-master",
         "mockery/mockery": "^1.0.0",
         "phpmd/phpmd": "^2.0.0",
         "phpunit/phpunit": "^9.0.0",
+        "roave/security-advisories": "dev-master",
         "squizlabs/php_codesniffer": "^3.0.0",
         "vimeo/psalm": "^3.0.0"
     },
