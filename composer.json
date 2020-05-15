@@ -21,6 +21,7 @@
         "php": "^7.4",
         "ext-json": "*",
         "friendsofphp/php-cs-fixer": "^2.16",
+        "gocanto/http-client": "^1.1",
         "nesbot/carbon": "^2.32",
         "symfony/validator": "^5.0"
     },
