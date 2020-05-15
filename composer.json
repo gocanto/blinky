@@ -1,0 +1,54 @@
+{
+    "name": "gocanto/blinky",
+    "type": "php-bundle",
+    "description": "Driver based email verifier.",
+    "keywords": [
+        "php",
+        "data",
+        "bag",
+        "transfer",
+        "object"
+    ],
+    "homepage": "https://github.com/gocanto/blinky",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Gustavo Ocanto",
+            "email": "gustavoocanto@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^7.4",
+        "ext-json": "*",
+        "friendsofphp/php-cs-fixer": "^2.16",
+        "nesbot/carbon": "^2.32",
+        "symfony/validator": "^5.0"
+    },
+    "require-dev": {
+        "mockery/mockery": "^1.0.0",
+        "phpmd/phpmd": "^2.0.0",
+        "phpunit/phpunit": "^9.0.0",
+        "squizlabs/php_codesniffer": "^3.0.0",
+        "vimeo/psalm": "^3.0.0"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "scripts": {
+        "analysis": [
+            "./vendor/bin/psalm --output-format=compact --show-info=false"
+        ],
+        "coverage": [
+            "php vendor/bin/phpunit --testsuite=Unit --coverage-html=public/coverage --colors=always"
+        ],
+        "fix-style": [
+            "./vendor/bin/php-cs-fixer fix . --config=.php_cs"
+        ],
+        "test": [
+            "php vendor/bin/phpunit --testsuite=Unit --colors=always"
+        ]
+    },
+    "support": {
+        "issues": "https://github.com/gocanto/blinky/issues",
+        "source": "https://github.com/gocanto/blinky"
+    }
+}

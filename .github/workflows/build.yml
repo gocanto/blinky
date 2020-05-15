@@ -1,0 +1,46 @@
+name: build
+
+on:
+    push:
+        branches-ignore:
+            - master
+        tags:
+            - v*
+jobs:
+    test:
+        runs-on: ${{ matrix.os }}
+        strategy:
+            matrix:
+                php: [7.4]
+                dependency-version: [prefer-stable]
+                os: [ubuntu-latest]
+        name: P${{ matrix.php }} - ${{ matrix.dependency-version }} - ${{ matrix.os }}
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v2
+
+            - name: Cache dependencies
+              uses: actions/cache@v1
+              with:
+                  path: ~/.composer/cache/files
+                  key: php-${{ matrix.php }}-composer-${{ hashFiles('composer.json') }}
+
+            - name: Setup PHP
+              uses: shivammathur/setup-php@v2
+              with:
+                  php-version: ${{ matrix.php }}
+                  coverage: none
+                  extensions: mbstring, dom, json, libxml, xml, xmlwriter
+                  tools: php-cs-fixer, phpunit
+
+            - name: Install dependencies
+              run: |
+                  composer global require hirak/prestissimo
+                  composer update --${{ matrix.dependency-version }} --prefer-dist --no-interaction --no-suggest
+
+            - name: Run Tests
+              run: vendor/bin/phpunit
+
+            - name: Run Psalm
+              run: ./vendor/bin/psalm --output-format=compact --show-info=false
