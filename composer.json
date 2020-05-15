@@ -33,6 +33,23 @@
         "squizlabs/php_codesniffer": "^3.0.0",
         "vimeo/psalm": "^3.0.0"
     },
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": {
+            "*": "dist"
+        },
+        "sort-packages": true
+    },
+    "autoload": {
+        "psr-4": {
+            "Blinky\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Blinky\\Tests\\": "tests"
+        }
+    },
     "minimum-stability": "dev",
     "prefer-stable": true,
     "scripts": {
@@ -52,22 +69,5 @@
     "support": {
         "issues": "https://github.com/gocanto/blinky/issues",
         "source": "https://github.com/gocanto/blinky"
-    },
-    "config": {
-        "optimize-autoloader": true,
-        "preferred-install": {
-            "*": "dist"
-        },
-        "sort-packages": true
-    },
-    "autoload": {
-        "psr-4": {
-            "Blinky\\": "src/"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "Blinky\\Tests\\": "tests"
-        }
     }
 }
