@@ -7,9 +7,11 @@ namespace Blinky\Mailgun\Http;
 class VerificationRequest
 {
     public const API_VERSION = 'v4';
+    public const MAX_RETRIES = 5;
 
-    private string $version = self::API_VERSION;
     private string $address;
+    private int $retries = self::MAX_RETRIES;
+    private string $version = self::API_VERSION;
 
     public function getVersion(): string
     {
@@ -29,6 +31,22 @@ class VerificationRequest
     public function setAddress(string $address): void
     {
         $this->address = $address;
+    }
+
+    /**
+     * @return int
+     */
+    public function getRetries(): int
+    {
+        return $this->retries;
+    }
+
+    /**
+     * @param int $retries
+     */
+    public function setRetries(int $retries): void
+    {
+        $this->retries = $retries;
     }
 
     public function getUrl(): string

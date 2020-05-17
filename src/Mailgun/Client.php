@@ -29,7 +29,7 @@ class Client implements Broker
     public function verify(VerificationRequest $request): VerificationResponse
     {
         try {
-            $response = $this->http->request('get', $request->getUrl(), [
+            $response = $this->http->retry($request->getRetries())->request('get', $request->getUrl(), [
                 'auth' => [
                     $this->credentials->getUsername(),
                     $this->credentials->getApiKey(),
