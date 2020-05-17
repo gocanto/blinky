@@ -6,8 +6,9 @@ namespace Blinky\Mailgun;
 
 use Blinky\BlinkyException;
 use Blinky\Broker;
-use Blinky\Http\State;
-use Blinky\Http\VerifyRequest;
+use Blinky\Mailgun\Http\VerificationRequest;
+use Blinky\Mailgun\Http\VerificationResponse;
+use Blinky\Support\Json;
 use Gocanto\HttpClient\HttpClient;
 use Throwable;
 
@@ -22,14 +23,25 @@ class Client implements Broker
         $this->http = $http;
     }
 
-    public function verify(VerifyRequest $request): State
+    /**
+     * @throws BlinkyException
+     */
+    public function verify(VerificationRequest $request): VerificationResponse
     {
         try {
-            $response = $this->http->request($request->getUrl());
+            $response = $this->http->request('get', $request->getUrl(), [
+                'auth' => [
+                    $this->credentials->getUsername(),
+                    $this->credentials->getApiKey(),
+                ],
+                'query' => [
+                    'address' => $request->getAddress(),
+                ],
+            ]);
         } catch (Throwable $exception) {
-            BlinkyException::fromThrowable($exception);
+            throw BlinkyException::fromThrowable($exception);
         }
 
-        return new State();
+        return new VerificationResponse(Json::decode($response->getBody()->getContents()));
     }
 }

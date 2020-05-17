@@ -21,9 +21,18 @@ class BlinkyException extends Exception
         return $exception;
     }
 
-    public static function fromThrowable(Throwable $previous, string $message = null, int $code = null): self
+    public static function fromThrowable(Throwable $previous): self
     {
-        return static::create($message ?? $previous->getMessage(), $code, $previous);
+        return static::create($previous->getMessage(), $previous->getCode(), $previous);
+    }
+
+    public static function fromRejection(Rejection $rejection, ?Throwable $previous = null): self
+    {
+        $exception = static::create($rejection->getMessage(), $rejection->getCode(), $previous);
+
+        $exception->rejection = $rejection;
+
+        return $exception;
     }
 
     /**
