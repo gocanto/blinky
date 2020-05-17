@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Blinky\Mailgun\Http;
+namespace Blinky\Mailgun;
 
-use Blinky\Verification;
+use Blinky\Contracts\VerificationResponse;
 
-class VerificationResponse implements Verification
+class VerifyResponse implements VerificationResponse
 {
     public const AUTHORISED = 'deliverable';
 

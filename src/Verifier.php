@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Blinky;
 
-interface Broker
+interface Verifier
 {
+    public function isTest(): bool;
 }

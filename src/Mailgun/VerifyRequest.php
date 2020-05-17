@@ -2,9 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Blinky\Mailgun\Http;
+namespace Blinky\Mailgun;
 
-class VerificationRequest
+use Blinky\Contracts\VerificationRequest;
+
+class VerifyRequest implements VerificationRequest
 {
     public const API_VERSION = 'v4';
     public const MAX_RETRIES = 5;

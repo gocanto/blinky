@@ -2,13 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Blinky;
+namespace Blinky\Contracts;
 
-interface Verification
+interface VerificationResponse
 {
     public function isValid(): bool;
-
-    public function getSuggestion(): ?string;
-
     public function toArray(): array;
+    public function getSuggestion(): ?string;
 }

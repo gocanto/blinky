@@ -5,14 +5,14 @@ declare(strict_types=1);
 namespace Blinky\Mailgun;
 
 use Blinky\BlinkyException;
-use Blinky\Broker;
-use Blinky\Mailgun\Http\VerificationRequest;
-use Blinky\Mailgun\Http\VerificationResponse;
+use Blinky\Contracts\VerificationRequest;
+use Blinky\Contracts\VerificationResponse;
+use Blinky\Verifier;
 use Blinky\Support\Json;
 use Gocanto\HttpClient\HttpClient;
 use Throwable;
 
-class Client implements Broker
+class Client implements Verifier
 {
     private Credentials $credentials;
     private HttpClient $http;
@@ -23,7 +23,14 @@ class Client implements Broker
         $this->http = $http;
     }
 
+    public function isTest(): bool
+    {
+        return $this->credentials->isTest();
+    }
+
     /**
+     * @param VerificationRequest $request
+     * @return VerificationResponse
      * @throws BlinkyException
      */
     public function verify(VerificationRequest $request): VerificationResponse
@@ -42,6 +49,6 @@ class Client implements Broker
             throw BlinkyException::fromThrowable($exception);
         }
 
-        return new VerificationResponse(Json::decode($response->getBody()->getContents()));
+        return new VerifyResponse(Json::decode($response->getBody()->getContents()));
     }
 }
