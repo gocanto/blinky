@@ -22,7 +22,7 @@ class Client implements Verifier
     }
 
     /**
-     * @throws BlinkyException
+     * @throws BlinkyException|Throwable
      */
     public function verify(string $email): Status
     {
@@ -40,11 +40,7 @@ class Client implements Verifier
             throw BlinkyException::fromThrowable($exception);
         }
 
-        try {
-            $payload = json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
-        } catch (Throwable $e) {
-            throw BlinkyException::fromThrowable($e);
-        }
+        $payload = json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
 
         if (mb_strtolower($payload['result']) === Config::VALID_STATUS && count($payload['reason']) === 0) {
             return Status::valid($payload);

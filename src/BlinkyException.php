@@ -12,9 +12,12 @@ class BlinkyException extends Exception
 {
     private ?Rejection $rejection = null;
 
-    public static function create(string $message, ?int $error = null, ?Throwable $previous = null): self
-    {
-        $rejection = new Rejection($message, $error ?? Rejection::DEFAULT_ERROR_CODE);
+    public static function create(
+        string $message,
+        int $error = Rejection::DEFAULT_ERROR_CODE,
+        ?Throwable $previous = null
+    ): self {
+        $rejection = new Rejection($message, $error);
 
         $exception = new static(
             $rejection->getMessage(),
@@ -29,7 +32,7 @@ class BlinkyException extends Exception
 
     public static function fromThrowable(Throwable $previous): self
     {
-        return static::create($previous->getMessage(), $previous->getCode(), $previous);
+        return static::create($previous->getMessage(), (int) $previous->getCode(), $previous);
     }
 
     public function getRejection(): ?Rejection
