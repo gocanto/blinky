@@ -9,10 +9,10 @@ use Blinky\Verifier;
 
 class Client implements Verifier
 {
-    public function verify(string $request): Status
+    public function verify(string $email): Status
     {
         return Status::valid([
-            'email' => 'gustavoocanto@gmail.com',
+            'address' => $email,
         ]);
     }
 }
