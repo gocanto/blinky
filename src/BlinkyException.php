@@ -10,13 +10,19 @@ use Throwable;
 
 class BlinkyException extends Exception
 {
-    private Rejection $rejection;
+    private ?Rejection $rejection = null;
 
     public static function create(string $message, ?int $error = null, ?Throwable $previous = null): self
     {
-        $exception = new static($message, $error, $previous);
+        $rejection = new Rejection($message, $error ?? Rejection::DEFAULT_ERROR_CODE);
 
-        $exception->rejection = new Rejection($message, $error);
+        $exception = new static(
+            $rejection->getMessage(),
+            $rejection->getCode(),
+            $previous
+        );
+
+        $exception->rejection = $rejection;
 
         return $exception;
     }
@@ -26,31 +32,17 @@ class BlinkyException extends Exception
         return static::create($previous->getMessage(), $previous->getCode(), $previous);
     }
 
-    public static function fromRejection(Rejection $rejection, ?Throwable $previous = null): self
-    {
-        $exception = static::create($rejection->getMessage(), $rejection->getCode(), $previous);
-
-        $exception->rejection = $rejection;
-
-        return $exception;
-    }
-
-    public function getRejection(): Rejection
+    public function getRejection(): ?Rejection
     {
         return $this->rejection;
     }
 
     public function toString(): string
     {
-        $rejection = $this->rejection;
-
-        if ($rejection === null) {
-            $rejection = new Rejection($this->getMessage(), $this->getCode());
+        if ($this->rejection !== null) {
+            return $this->rejection->getMessage();
         }
 
-        $message = $this->getMessage();
-        $message .= PHP_EOL;
-
-        return $message . ' ' . $rejection->getMessage();
+        return $this->getMessage();
     }
 }
