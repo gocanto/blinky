@@ -12,7 +12,10 @@
 
     <testsuites>
         <testsuite name="Unit">
-            <directory>./tests</directory>
+            <directory>./tests/Unit</directory>
+        </testsuite>
+        <testsuite name="Http">
+            <directory>./tests/Integration</directory>
         </testsuite>
     </testsuites>
 

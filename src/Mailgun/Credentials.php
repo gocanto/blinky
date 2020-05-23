@@ -6,7 +6,7 @@ namespace Blinky\Mailgun;
 
 use Blinky\Environment;
 
-final class Credentials
+class Credentials
 {
     private string $username;
     private string $apiKey;
@@ -42,17 +42,11 @@ final class Credentials
         return $this->environment;
     }
 
-    /**
-     * @return string
-     */
     public function getUsername(): string
     {
         return $this->username;
     }
 
-    /**
-     * @param string $username
-     */
     public function setUsername(string $username): void
     {
         $this->username = $username;

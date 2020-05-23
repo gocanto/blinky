@@ -6,5 +6,5 @@ namespace Blinky;
 
 interface Verifier
 {
-    public function isTest(): bool;
+    public function verify(string $email): Status;
 }

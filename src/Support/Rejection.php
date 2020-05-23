@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Blinky\Support;
 
-class Rejection
+final class Rejection
 {
     public const DEFAULT_ERROR_CODE = 500;
 
@@ -17,17 +17,11 @@ class Rejection
         $this->code = $code ?? self::DEFAULT_ERROR_CODE;
     }
 
-    /**
-     * @return string
-     */
     public function getMessage(): string
     {
         return $this->message;
     }
 
-    /**
-     * @return int
-     */
     public function getCode(): int
     {
         return $this->code;

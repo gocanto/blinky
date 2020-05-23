@@ -35,9 +35,6 @@ class BlinkyException extends Exception
         return $exception;
     }
 
-    /**
-     * @return Rejection
-     */
     public function getRejection(): Rejection
     {
         return $this->rejection;

@@ -7,7 +7,7 @@ namespace Blinky\Support;
 use Blinky\BlinkyException;
 use Throwable;
 
-class Json
+final class Json
 {
     /**
      * @throws BlinkyException

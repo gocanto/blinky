@@ -1,0 +1,8 @@
+{
+    "address":"gustavoocant@gmail.com",
+    "is_disposable_address":false,
+    "is_role_address":false,
+    "reason":["mailbox_does_not_exist"],
+    "result":"undeliverable",
+    "risk":"high"
+}
