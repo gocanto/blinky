@@ -1,4 +1,7 @@
-# Blinky
+## About it
+<a href="https://packagist.org/packages/gocanto/blinky"><img src="https://img.shields.io/packagist/dt/gocanto/blinky.svg" alt="Total Downloads"></a>
+<a href="https://packagist.org/packages/gocanto/blinky"><img src="https://img.shields.io/github/v/release/gocanto/blinky.svg" alt="Latest Stable Version"></a>
+<a href="https://github.com/gocanto/blinky/actions"><img src="https://github.com/gocanto/blinky/workflows/build/badge.svg" alt="Build status"></a>
 
 Blinky is a driver based email verifier that helps you validate your emails inputs against different emails providers.
 
