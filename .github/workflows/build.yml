@@ -40,7 +40,7 @@ jobs:
                   composer update --${{ matrix.dependency-version }} --prefer-dist --no-interaction --no-suggest
 
             - name: Run Tests
-              run: vendor/bin/phpunit
+              run: composer test
 
             - name: Run Psalm
-              run: ./vendor/bin/psalm --output-format=compact --show-info=false
+              run: composer analysis
