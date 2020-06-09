@@ -11,17 +11,23 @@ use PHPUnit\Framework\TestCase;
 
 class MailgunTest extends TestCase
 {
-    /**
-     * @test
-     */
-    public function itProperlyValidatesGivenAddressesAgainstMailgun(): void
+    private Client $client;
+
+    protected function setUp(): void
     {
         $credentials = Credentials::live();
         $credentials->setUsername('api');
-        $credentials->setApiKey('production-key');
+        $credentials->setApiKey('live-key');
 
-        $client = new Client($credentials, new HttpClient());
-        $response = $client->verify('gustavoocanto@gmail.com');
+        $this->client = new Client($credentials, new HttpClient());
+    }
+
+    /**
+     * @test
+     */
+    public function itProperlyValidatesGivenAddresses(): void
+    {
+        $response = $this->client->verify('gustavoocanto@gmail.com');
 
         $this->assertTrue($response->isValid());
         $this->assertNotEmpty($response->toArray());
@@ -33,5 +39,27 @@ class MailgunTest extends TestCase
         $this->assertFalse($data['is_disposable_address']);
         $this->assertFalse($data['is_role_address']);
         $this->assertCount(0, $data['reason']);
+    }
+
+    /**
+     * @test
+     */
+    public function itReturnSuggestionIfAny(): void
+    {
+        $response = $this->client->verify('gus@gus.com');
+
+        $this->assertFalse($response->isValid());
+        $this->assertNotEmpty($response->toArray());
+
+        $data = $response->toArray();
+        $this->assertSame('gus@gus.com', $data['address']);
+        $this->assertSame('unknown', $data['result']);
+        $this->assertSame('unknown', $data['risk']);
+        $this->assertFalse($data['is_disposable_address']);
+        $this->assertFalse($data['is_role_address']);
+        $this->assertCount(1, $data['reason']);
+
+        $this->assertTrue($response->hasSuggestion());
+        $this->assertNotEmpty($response->getSuggestion());
     }
 }
