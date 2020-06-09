@@ -79,6 +79,8 @@ class ClientTest extends TestCase
         $this->assertFalse($data['is_disposable_address']);
         $this->assertFalse($data['is_role_address']);
         $this->assertCount(1, $data['reason']);
+        $this->assertTrue($response->hasSuggestion());
+        $this->assertSame('gustavoocanto@gmail.com', $response->getSuggestion());
     }
 
     /**

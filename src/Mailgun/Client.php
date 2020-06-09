@@ -46,6 +46,9 @@ class Client implements Verifier
             return Status::valid($payload);
         }
 
-        return Status::invalid($payload);
+        $status = Status::invalid($payload);
+        $status->setSuggestion($payload['did_you_mean'] ?? null);
+
+        return $status;
     }
 }
