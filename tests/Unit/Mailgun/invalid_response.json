@@ -4,5 +4,6 @@
     "is_role_address":false,
     "reason":["mailbox_does_not_exist"],
     "result":"undeliverable",
-    "risk":"high"
+    "risk":"high",
+    "did_you_mean": "gustavoocanto@gmail.com"
 }
