@@ -8,7 +8,7 @@ use Blinky\BlinkyException;
 use Blinky\Mailgun\Client;
 use Blinky\Mailgun\Config;
 use Blinky\Mailgun\Credentials;
-use Gocanto\HttpClient\HttpClient;
+use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Psr7\Response;
 use Mockery;
 use PHPUnit\Framework\TestCase;
@@ -17,12 +17,12 @@ class ClientTest extends TestCase
 {
     private Client $client;
 
-    /** @var HttpClient|Mockery\LegacyMockInterface|Mockery\MockInterface */
+    /** @var Mockery\LegacyMockInterface|Mockery\MockInterface */
     private $http;
 
     protected function setUp(): void
     {
-        $this->http = Mockery::mock(HttpClient::class);
+        $this->http = Mockery::mock(ClientInterface::class);
         $this->client = new Client($this->getCredentials(), $this->http);
     }
 
@@ -44,7 +44,6 @@ class ClientTest extends TestCase
                 $attributes['query']['address'] === 'gustavoocanto@gmail.com';
         };
 
-        $this->http->shouldReceive('retry')->once()->with(5)->andReturn($this->http);
         $this->http->shouldReceive('request')->once()->withArgs($withRequest)->andReturn($this->getPayload());
 
         $response = $this->client->verify('gustavoocanto@gmail.com');
@@ -62,10 +61,10 @@ class ClientTest extends TestCase
 
     /**
      * @test
+     * @throws BlinkyException
      */
     public function itReturnInvalidResponsesWhenGivenEmailsAreInvalid(): void
     {
-        $this->http->shouldReceive('retry')->once()->with(5)->andReturn($this->http);
         $this->http->shouldReceive('request')->once()->andReturn($this->getPayload(false));
 
         $response = $this->client->verify('gustavoocanto@gmail.com');
@@ -90,7 +89,6 @@ class ClientTest extends TestCase
     {
         $this->expectException(BlinkyException::class);
 
-        $this->http->shouldReceive('retry')->once()->with(5)->andReturn($this->http);
         $this->http->shouldReceive('request')->once()->andThrow(BlinkyException::class);
 
         $this->client->verify('invalid@gmail.com');
