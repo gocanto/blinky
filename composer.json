@@ -21,7 +21,7 @@
         "php": "^7.4",
         "ext-json": "*",
         "friendsofphp/php-cs-fixer": "^2.16",
-        "gocanto/http-client": "^1.1",
+        "guzzlehttp/guzzle": "^6.5",
         "nesbot/carbon": "^2.32"
     },
     "require-dev": {

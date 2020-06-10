@@ -6,7 +6,7 @@ namespace Blinky\Tests\Integration;
 
 use Blinky\Mailgun\Client;
 use Blinky\Mailgun\Credentials;
-use Gocanto\HttpClient\HttpClient;
+use GuzzleHttp\Client as HttpClient;
 use PHPUnit\Framework\TestCase;
 
 class MailgunTest extends TestCase
@@ -17,7 +17,7 @@ class MailgunTest extends TestCase
     {
         $credentials = Credentials::live();
         $credentials->setUsername('api');
-        $credentials->setApiKey('live-key');
+        $credentials->setApiKey('key-live');
 
         $this->client = new Client($credentials, new HttpClient());
     }
